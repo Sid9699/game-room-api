@@ -2,7 +2,12 @@ import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
 import cors from "cors";
-import mongoose from "mongoose";
+import passport from "passport";
+
+// all configs
+import "./config/db";
+import "./config/passport";
+
 import gamesRouter from "./routes/games";
 import authRouter from "./routes/auth";
 
@@ -12,13 +17,7 @@ const port = process.env.PORT || 4000;
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect(process.env.MONGODB_URI as string, () => {
-  console.log("Connected to Mongo DB");
-});
-
-app.get("/", (req, res) => {
-  res.send("ok");
-});
+app.use(passport.initialize());
 
 app.use("/api/auth", authRouter);
 app.use("/api/games", gamesRouter);
