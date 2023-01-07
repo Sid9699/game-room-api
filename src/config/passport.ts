@@ -8,6 +8,8 @@ passport.use(
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     },
     async (jwt_payload, cb) => {
+      delete jwt_payload.iat;
+      delete jwt_payload.exp;
       cb(null, jwt_payload);
     }
   )
