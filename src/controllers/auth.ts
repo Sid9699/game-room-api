@@ -21,6 +21,10 @@ export const register = async (req: Request, res: Response) => {
     return res.json({
       message: "User created successfully.",
       token: generateToken(email),
+      tokenExpiry: Date.now() + 24 * 60 * 60 * 1000,
+      user: {
+        email,
+      },
     });
   } catch (err) {
     console.log(err);
@@ -44,8 +48,11 @@ export const login = async (req: Request, res: Response) => {
     if (checkPassword) {
       return res.json({
         message: "Logged in successfully.",
-        email: user.email,
+        user: {
+          email: user.email,
+        },
         token: generateToken(email),
+        tokenExpiry: Date.now() + 24 * 60 * 60 * 1000,
       });
     } else {
       return res.status(400).json({
@@ -61,7 +68,15 @@ export const login = async (req: Request, res: Response) => {
 };
 
 const generateToken = (email: string) => {
-  return jwt.sign({ email }, process.env.JWT_SECRET as string, {
-    expiresIn: "1d",
-  });
+  return jwt.sign(
+    {
+      user: {
+        email,
+      },
+    },
+    process.env.JWT_SECRET as string,
+    {
+      expiresIn: "1d",
+    }
+  );
 };
