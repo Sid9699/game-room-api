@@ -1,9 +1,14 @@
 import express from "express";
-import { list } from "../controllers/games";
+import { list, listGenres } from "../controllers/games";
 import passport from "passport";
 
 const router = express.Router();
 
 router.get("/", passport.authenticate("jwt", { session: false }), list);
+router.get(
+  "/genres",
+  passport.authenticate("jwt", { session: false }),
+  listGenres
+);
 
 export default router;
