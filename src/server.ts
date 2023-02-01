@@ -15,7 +15,11 @@ import userRouter from "./routes/user";
 const app = express();
 const port = process.env.PORT || 4000;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://game-room-zeta.vercel.app/",
+  })
+);
 app.use(express.json());
 
 app.use(passport.initialize());
