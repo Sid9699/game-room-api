@@ -5,12 +5,12 @@ import cors from "cors";
 import passport from "passport";
 
 // all configs
-import "./config/db";
-import "./config/passport";
+import "./config/db.config";
+import "./config/passport.config";
 
-import gamesRouter from "./routes/games";
-import authRouter from "./routes/auth";
-import userRouter from "./routes/user";
+import gamesRouter from "./routes/games.route";
+import authRouter from "./routes/auth.route";
+import userRouter from "./routes/user.route";
 
 const app = express();
 const port = process.env.PORT || 4000;

@@ -1,5 +1,5 @@
 import express from "express";
-import { list, listGenres } from "../controllers/games";
+import { list, listGenres } from "../controllers/games.controller";
 import passport from "passport";
 
 const router = express.Router();
