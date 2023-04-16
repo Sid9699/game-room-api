@@ -8,6 +8,8 @@ import passport from "passport";
 import "./config/db.config";
 import "./config/passport.config";
 
+import { logInfo } from "./middlewares/logger.middleware";
+
 import gamesRouter from "./routes/games.route";
 import authRouter from "./routes/auth.route";
 import userRouter from "./routes/user.route";
@@ -19,6 +21,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use(passport.initialize());
+app.use(logInfo);
 
 app.use("/auth", authRouter);
 app.use("/games", gamesRouter);
