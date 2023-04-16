@@ -5,7 +5,7 @@ export const list = async (req: Request, res: Response) => {
   const { page = 1, search = "", pageSize = 10, genres = "" } = req.query;
   try {
     const gamesRes = await axios.get(
-      `https://api.rawg.io/api/games?key=${
+      `${process.env.RAWG_API_URL}/games?key=${
         process.env.RAWG_API_KEY
       }&page=${page}&page_size=${pageSize}&search=${search}${
         genres ? `&genres=${genres}` : ""
@@ -31,7 +31,7 @@ export const list = async (req: Request, res: Response) => {
 export const listGenres = async (req: Request, res: Response) => {
   try {
     const genresRes = await axios.get(
-      `https://api.rawg.io/api/genres?key=${process.env.RAWG_API_KEY}`,
+      `${process.env.RAWG_API_URL}/genres?key=${process.env.RAWG_API_KEY}`,
       {
         headers: {
           "Accept-Encoding": "*",
