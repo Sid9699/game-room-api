@@ -4,13 +4,12 @@ dotenv.config();
 import cors from "cors";
 import passport from "passport";
 import swaggerUi from "swagger-ui-express";
+import morgan from "morgan";
 
 // all configs
 import "./config/db.config";
 import "./config/passport.config";
 import swaggerSpec from "./config/swagger.config";
-
-import { logInfo } from "./middlewares/logger.middleware";
 
 import gamesRouter from "./routes/games.route";
 import authRouter from "./routes/auth.route";
@@ -23,7 +22,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use(passport.initialize());
-app.use(logInfo);
+app.use(morgan("tiny"));
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
