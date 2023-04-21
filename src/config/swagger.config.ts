@@ -23,11 +23,6 @@ const options: swaggerJSDoc.OAS3Options = {
         bearerAuth: [],
       },
     ],
-    servers: [
-      {
-        url: "http://localhost:4000",
-      },
-    ],
   },
   apis: ["./src/models/*.ts", "./src/routes/*.ts"],
 };
