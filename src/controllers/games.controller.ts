@@ -28,6 +28,28 @@ export const list = async (req: Request, res: Response) => {
   }
 };
 
+export const get = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const gamesRes = await axios.get(
+      `${process.env.RAWG_API_URL}/games/${id}?key=${process.env.RAWG_API_KEY}`,
+      {
+        headers: {
+          "Accept-Encoding": "*",
+        },
+      }
+    );
+    res.json({
+      data: gamesRes.data,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "An error occoured please try again later",
+    });
+  }
+};
+
 export const listGenres = async (req: Request, res: Response) => {
   try {
     const genresRes = await axios.get(

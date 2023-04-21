@@ -1,5 +1,5 @@
 import express from "express";
-import { list, listGenres } from "../controllers/games.controller";
+import { get, list, listGenres } from "../controllers/games.controller";
 import passport from "passport";
 
 /**
@@ -39,6 +39,23 @@ const router = express.Router();
  *
  */
 router.get("/", passport.authenticate("jwt", { session: false }), list);
+
+/**
+ * @swagger
+ * /games/{id}:
+ *   get:
+ *     tags: [Games]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description:
+ *
+ */
+router.get("/:id", passport.authenticate("jwt", { session: false }), get);
 
 /**
  * @swagger
