@@ -42,6 +42,22 @@ router.get("/", passport.authenticate("jwt", { session: false }), list);
 
 /**
  * @swagger
+ * /games/genres:
+ *   get:
+ *     tags: [Games]
+ *     responses:
+ *       200:
+ *         description:
+ *
+ */
+router.get(
+  "/genres",
+  passport.authenticate("jwt", { session: false }),
+  listGenres
+);
+
+/**
+ * @swagger
  * /games/{id}:
  *   get:
  *     tags: [Games]
@@ -56,21 +72,5 @@ router.get("/", passport.authenticate("jwt", { session: false }), list);
  *
  */
 router.get("/:id", passport.authenticate("jwt", { session: false }), get);
-
-/**
- * @swagger
- * /games/genres:
- *   get:
- *     tags: [Games]
- *     responses:
- *       200:
- *         description:
- *
- */
-router.get(
-  "/genres",
-  passport.authenticate("jwt", { session: false }),
-  listGenres
-);
 
 export default router;
