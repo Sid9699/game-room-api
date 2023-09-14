@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { Types } from "mongoose";
 import User from "../models/user.model";
 
 export const register = async (req: Request, res: Response) => {
@@ -14,13 +15,16 @@ export const register = async (req: Request, res: Response) => {
         message: "User already exists.",
       });
     const encryptedPassword = await bcrypt.hash(password, 1);
-    await User.create({
+    const createdUser = await User.create({
       email,
       password: encryptedPassword,
     });
     return res.json({
       message: "User created successfully.",
-      token: generateToken(email),
+      token: generateToken({
+        _id: createdUser._id,
+        email: createdUser.email,
+      }),
       tokenExpiry: Date.now() + 24 * 60 * 60 * 1000,
       user: {
         email,
@@ -51,7 +55,10 @@ export const login = async (req: Request, res: Response) => {
         user: {
           email: user.email,
         },
-        token: generateToken(email),
+        token: generateToken({
+          _id: user._id,
+          email: user.email,
+        }),
         tokenExpiry: Date.now() + 24 * 60 * 60 * 1000,
       });
     } else {
@@ -67,12 +74,10 @@ export const login = async (req: Request, res: Response) => {
   }
 };
 
-const generateToken = (email: string) => {
+const generateToken = (user: { email: string; _id: Types.ObjectId }) => {
   return jwt.sign(
     {
-      user: {
-        email,
-      },
+      user,
     },
     process.env.JWT_SECRET as string,
     {

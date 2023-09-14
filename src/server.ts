@@ -14,6 +14,7 @@ import swaggerSpec from "./config/swagger.config";
 import gamesRouter from "./routes/games.route";
 import authRouter from "./routes/auth.route";
 import userRouter from "./routes/user.route";
+import cartRouter from "./routes/cart.route";
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -33,5 +34,6 @@ app.get("/", (req, res) => {
 app.use("/auth", authRouter);
 app.use("/games", gamesRouter);
 app.use("/user", userRouter);
+app.use("/cart-items", cartRouter);
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
