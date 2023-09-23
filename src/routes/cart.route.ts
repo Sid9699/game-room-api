@@ -1,5 +1,5 @@
 import express from "express";
-import { list, create } from "../controllers/cart.controller";
+import { list, create, remove } from "../controllers/cart.controller";
 import passport from "passport";
 
 /**
@@ -23,12 +23,12 @@ router.get("/", passport.authenticate("jwt", { session: false }), list);
 
 /**
  * @swagger
- * /cart-items/{id}:
+ * /cart-items/{gameId}:
  *   post:
  *     tags: [Cart]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: gameId
  *         schema:
  *           type: integer
  *     responses:
@@ -41,5 +41,22 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   create
 );
+
+/**
+ * @swagger
+ * /cart-items/{id}:
+ *   delete:
+ *     tags: [Cart]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description:
+ *
+ */
+router.delete("/:id", passport.authenticate("jwt", { session: false }), remove);
 
 export default router;

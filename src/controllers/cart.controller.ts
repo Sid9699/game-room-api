@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import CartItems from "../models/cartItems.model";
 import axios from "axios";
+import { Types } from "mongoose";
 
 export const list = async (req: Request, res: Response) => {
   try {
@@ -8,7 +9,15 @@ export const list = async (req: Request, res: Response) => {
     const items = await CartItems.aggregate([
       {
         $match: {
-          userId: user?._id,
+          userId: new Types.ObjectId(user._id),
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          image: 1,
+          rating: 1,
         },
       },
     ]);
@@ -46,6 +55,26 @@ export const create = async (req: Request, res: Response) => {
     });
     return res.status(201).json({
       message: "Item added successfully.",
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "An error occoured please try again later",
+    });
+  }
+};
+
+export const remove = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const user: any = req.user;
+
+    await CartItems.deleteOne({
+      userId: user?._id,
+      _id: new Types.ObjectId(id),
+    });
+    return res.status(201).json({
+      message: "Item removed successfully.",
     });
   } catch (err) {
     console.log(err);
