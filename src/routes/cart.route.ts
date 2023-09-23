@@ -1,5 +1,5 @@
 import express from "express";
-import { list, create, remove, count } from "../controllers/cart.controller";
+import { list, create, remove } from "../controllers/cart.controller";
 import passport from "passport";
 
 /**
@@ -20,18 +20,6 @@ const router = express.Router();
  *
  */
 router.get("/", passport.authenticate("jwt", { session: false }), list);
-
-/**
- * @swagger
- * /cart-items/count:
- *   get:
- *     tags: [Cart]
- *     responses:
- *       200:
- *         description:
- *
- */
-router.get("/count", passport.authenticate("jwt", { session: false }), count);
 
 /**
  * @swagger

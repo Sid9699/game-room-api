@@ -18,29 +18,13 @@ export const list = async (req: Request, res: Response) => {
           name: 1,
           image: 1,
           rating: 1,
+          gameId: 1,
         },
       },
     ]);
     res.json({
       count: items.length,
       items,
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({
-      message: "An error occoured please try again later",
-    });
-  }
-};
-
-export const count = async (req: Request, res: Response) => {
-  try {
-    const user: any = req.user;
-    const count = await CartItems.countDocuments({
-      userId: new Types.ObjectId(user._id),
-    });
-    res.json({
-      count,
     });
   } catch (err) {
     console.log(err);
