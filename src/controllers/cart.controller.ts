@@ -33,6 +33,23 @@ export const list = async (req: Request, res: Response) => {
   }
 };
 
+export const count = async (req: Request, res: Response) => {
+  try {
+    const user: any = req.user;
+    const count = await CartItems.countDocuments({
+      userId: new Types.ObjectId(user._id),
+    });
+    res.json({
+      count,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "An error occoured please try again later",
+    });
+  }
+};
+
 export const create = async (req: Request, res: Response) => {
   try {
     const { gameId } = req.params;
